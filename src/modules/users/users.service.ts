@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersEntity } from './entity/users.entity';
+import { UsersEntity } from './entities/users.entity';
 import { Repository } from 'typeorm';
+import { RegisterDto, userRegisterResponseSchema } from './dto/register.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -22,8 +24,37 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { email } });
   }
 
-  async createUser(userData: Partial<UsersEntity>): Promise<UsersEntity> {
-    const newUser = this.usersRepository.create(userData);
-    return this.usersRepository.save(newUser);
+  async create(data: RegisterDto): Promise<UsersEntity> {
+    const isUserExist = await this.usersRepository.findOne({
+      where: { email: data.email },
+    });
+
+    if (isUserExist) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'User with this email already exists',
+          data: null,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const hashedPass = await bcrypt.hash(data.password, 10);
+
+    const user = this.usersRepository.create({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: hashedPass,
+      role: data.role,
+      number: data.number,
+      profilePicture: data.profilePictureUrl,
+    });
+
+    const savedUser = await this.usersRepository.save(user);
+    const response = userRegisterResponseSchema.parse(savedUser);
+
+    return response as UsersEntity;
   }
 }

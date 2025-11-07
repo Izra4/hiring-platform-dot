@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersEntity } from './modules/users/entity/users.entity';
-import { CvApplicantsEntity } from './modules/users/entity/cv-applicants.entity';
-import { UsersSkillsEntity } from './modules/users/entity/users-skills.entity';
+import { UsersEntity } from './modules/users/entities/users.entity';
+import { CvApplicantsEntity } from './modules/users/entities/cv-applicants.entity';
+import { UsersSkillsEntity } from './modules/users/entities/users-skills.entity';
+import { ExperiencesEntity } from './modules/experiences/entities/experiences.entity';
+import { CompaniesEntity } from './modules/companies/entities/companies.entity';
 
 @Module({
   imports: [
@@ -20,7 +22,13 @@ import { UsersSkillsEntity } from './modules/users/entity/users-skills.entity';
       database: process.env.DB_NAME,
       autoLoadEntities: true,
       synchronize: true,
-      entities: [UsersEntity, CvApplicantsEntity, UsersSkillsEntity],
+      entities: [
+        UsersEntity,
+        CvApplicantsEntity,
+        UsersSkillsEntity,
+        ExperiencesEntity,
+        CompaniesEntity,
+      ],
     }),
     UsersModule,
   ],

@@ -15,7 +15,7 @@ export class UsersSkillsEntity {
   id: string;
 
   @OneToOne(() => UsersEntity, (user) => user.id)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
   @Column('text', { nullable: false })

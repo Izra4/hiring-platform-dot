@@ -9,11 +9,9 @@ import {
 } from 'typeorm';
 import { CvApplicantsEntity } from './cv-applicants.entity';
 import { UsersSkillsEntity } from './users-skills.entity';
-
-export enum UserRole {
-  RECRUITER = 'recruiter',
-  APPLICANT = 'applicant',
-}
+import { ExperiencesEntity } from 'src/modules/experiences/entities/experiences.entity';
+import { CompaniesEntity } from 'src/modules/companies/entities/companies.entity';
+import { UserRole } from 'src/common/enum/role.enums';
 
 @Entity('users')
 export class UsersEntity {
@@ -61,4 +59,13 @@ export class UsersEntity {
 
   @OneToOne(() => UsersSkillsEntity, (usersSkills) => usersSkills.user)
   usersSkills: UsersSkillsEntity;
+
+  @OneToOne(() => CompaniesEntity, (company) => company.created_by)
+  company_created: CompaniesEntity;
+
+  @OneToOne(() => CompaniesEntity, (company) => company.updated_by)
+  company_updated: CompaniesEntity;
+
+  @OneToMany(() => ExperiencesEntity, (experience) => experience.user)
+  experiences: ExperiencesEntity[];
 }
