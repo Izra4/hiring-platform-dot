@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   findbyId(id: string): Promise<UsersEntity | null> {
-    return this.usersRepository.findOne({ where: { id } });
+    return this.usersRepository.findOneBy({ id: id });
   }
 
   findByEmail(email: string): Promise<UsersEntity | null> {

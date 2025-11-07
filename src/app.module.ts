@@ -7,6 +7,7 @@ import { CvApplicantsEntity } from './modules/users/entities/cv-applicants.entit
 import { UsersSkillsEntity } from './modules/users/entities/users-skills.entity';
 import { ExperiencesEntity } from './modules/experiences/entities/experiences.entity';
 import { CompaniesEntity } from './modules/companies/entities/companies.entity';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CompaniesEntity } from './modules/companies/entities/companies.entity';
       ],
     }),
     UsersModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
