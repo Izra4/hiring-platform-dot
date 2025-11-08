@@ -17,6 +17,8 @@ import { ApplicationEntity } from './modules/job-application/entities/applicatio
 import { SupabaseModule } from './modules/supabase/supabase.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { ApplicationModule } from './modules/job-application/application.module';
+import { TrxEntity } from './modules/premium_transactions/entities/trx.entity';
+import { TransactionsModule } from './modules/premium_transactions/trx.module';
 
 @Module({
   imports: [
@@ -41,6 +43,7 @@ import { ApplicationModule } from './modules/job-application/application.module'
         RecruiterDtlEntity,
         JobPostEntity,
         ApplicationEntity,
+        TrxEntity,
       ],
     }),
     UsersModule,
@@ -51,6 +54,7 @@ import { ApplicationModule } from './modules/job-application/application.module'
     SupabaseModule,
     UploadModule,
     ApplicationModule,
+    TransactionsModule,
   ],
 })
 export class AppModule {}

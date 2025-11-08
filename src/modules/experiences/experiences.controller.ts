@@ -41,9 +41,9 @@ export default class ExperiencesController {
 
   @UseGuards(AuthGuard)
   @Get(':id')
-  findById(@Req() req: Request, @Param('id') id: string) {
+  async findById(@Req() req: Request, @Param('id') id: string) {
     const userInfo = (req as JwtPayload).user;
-    const data = this.experienceService.findById(userInfo.sub, id);
+    const data = await this.experienceService.findById(userInfo.sub, id);
 
     if (data == null) {
       throw new HttpException(

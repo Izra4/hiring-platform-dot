@@ -39,7 +39,7 @@ export class ExperienceService {
     });
 
     if (exp?.user.id !== userId) {
-      return new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
 
     return exp;
