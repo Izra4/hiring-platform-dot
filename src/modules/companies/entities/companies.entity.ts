@@ -1,3 +1,4 @@
+import { JobPostEntity } from 'src/modules/job-posts/entities/job.entity';
 import { RecruiterDtlEntity } from 'src/modules/users/entities/recruiter-dtl.entity';
 import { UsersEntity } from 'src/modules/users/entities/users.entity';
 import {
@@ -5,6 +6,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -52,6 +54,9 @@ export class CompaniesEntity {
 
   @OneToOne(() => RecruiterDtlEntity, (recruiter) => recruiter.id)
   recruiter: RecruiterDtlEntity;
+
+  @OneToMany(() => JobPostEntity, (jobPost) => jobPost.company)
+  jobPosts: JobPostEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

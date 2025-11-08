@@ -11,8 +11,9 @@ import { CvApplicantsEntity } from './cv-applicants.entity';
 import { UsersSkillsEntity } from './users-skills.entity';
 import { ExperiencesEntity } from 'src/modules/experiences/entities/experiences.entity';
 import { CompaniesEntity } from 'src/modules/companies/entities/companies.entity';
-import { UserRole } from 'src/common/enum/role.enums';
+import { UserRole } from 'src/common/enums/role.enums';
 import { RecruiterDtlEntity } from './recruiter-dtl.entity';
+import { JobPostEntity } from 'src/modules/job-posts/entities/job.entity';
 
 @Entity('users')
 export class UsersEntity {
@@ -72,4 +73,7 @@ export class UsersEntity {
 
   @OneToMany(() => ExperiencesEntity, (experience) => experience.user)
   experiences: ExperiencesEntity[];
+
+  @OneToMany(() => JobPostEntity, (jobPost) => jobPost.recruiter)
+  jobPosts: JobPostEntity[];
 }

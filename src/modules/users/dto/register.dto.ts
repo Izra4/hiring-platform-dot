@@ -1,4 +1,4 @@
-import { UserRole } from 'src/common/enum/role.enums';
+import { UserRole } from 'src/common/enums/role.enums';
 import { z } from 'zod';
 
 export const RegisterSchema = z

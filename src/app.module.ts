@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ExperiencesModule } from './modules/experiences/experiences.module';
 import { CompaniesModule } from './modules/companies/companies.module';
 import { RecruiterDtlEntity } from './modules/users/entities/recruiter-dtl.entity';
+import { JobPostEntity } from './modules/job-posts/entities/job.entity';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { RecruiterDtlEntity } from './modules/users/entities/recruiter-dtl.entit
         ExperiencesEntity,
         CompaniesEntity,
         RecruiterDtlEntity,
+        JobPostEntity,
       ],
     }),
     UsersModule,
