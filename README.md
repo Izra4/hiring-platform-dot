@@ -6,7 +6,7 @@ Project ini dibuat untuk memenuhi technical test **PT. Digdaya Olah Teknologi (D
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 - **Language:** TypeScript  
 - **Framework:** NestJS  
 - **ORM:** TypeORM  
@@ -19,7 +19,7 @@ Project ini dibuat untuk memenuhi technical test **PT. Digdaya Olah Teknologi (D
 
 ---
 
-## 📂 Folder Structure
+## Folder Structure
 src/ <br>
 ├── common/ <br>
 │ ├── enums/ <br>
@@ -56,7 +56,7 @@ src/ <br>
 
 ---
 
-### 🏢 Database Design
+### Database Design
 - 9 relational tables
 ![](database-relation.png)
 - `users`, `companies`, `cv`, `skills`, `recruiter_detail`, `transaction`, `job_posts`, `job_applications`, `experiences`
@@ -82,7 +82,7 @@ src/ <br>
 
 ---
 
-### ☁️ File Upload
+### File Upload
 - File uploads handled via **Supabase Storage**
 - Used for applicant CV or other media files
 
@@ -101,7 +101,7 @@ https://documenter.getpostman.com/view/25930415/2sB3WsPzqZ
 
 ---
 
-## 🧰 Environment Variables
+## Environment Variables
 ```env
 PORT=
 DB_HOST=
