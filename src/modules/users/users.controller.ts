@@ -78,4 +78,17 @@ export class UsersController {
       data,
     };
   }
+
+  @UseGuards(AuthGuard)
+  @Post('cv')
+  async uploadCv(@Req() req: Request, @Body() cv_url: string) {
+    const userInfo = (req as JwtPayload).user;
+    const data = await this.usersService.uploadCv(userInfo.sub, cv_url);
+
+    return {
+      status: HttpStatus.CREATED,
+      message: 'CV uploaded',
+      data,
+    };
+  }
 }

@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { AddSkillsDto } from './dto/skills.dto';
 import { UsersSkillsEntity } from './entities/users-skills.entity';
 import { RecruiterDtlEntity } from './entities/recruiter-dtl.entity';
+import { CvApplicantsEntity } from './entities/cv-applicants.entity';
 
 @Injectable()
 export class UsersService {
@@ -15,8 +16,8 @@ export class UsersService {
     private usersRepository: Repository<UsersEntity>,
     @InjectRepository(UsersSkillsEntity)
     private usersSkillsRepository: Repository<UsersSkillsEntity>,
-    @InjectRepository(RecruiterDtlEntity)
-    private recruiterDtlRepository: Repository<RecruiterDtlEntity>,
+    @InjectRepository(CvApplicantsEntity)
+    private readonly cvApplicantsRepository: Repository<CvApplicantsEntity>,
   ) {}
 
   findAll(): Promise<UsersEntity[]> {
@@ -118,5 +119,13 @@ export class UsersService {
     });
 
     return await repo.save(data);
+  }
+
+  async uploadCv(userId: string, cv: string): Promise<CvApplicantsEntity> {
+    const data = this.cvApplicantsRepository.create({
+      user: { id: userId },
+      cvUrl: cv,
+    });
+    return await this.cvApplicantsRepository.save(data);
   }
 }

@@ -1,5 +1,6 @@
 import { JobType } from 'src/common/enums/job.enum';
 import { CompaniesEntity } from 'src/modules/companies/entities/companies.entity';
+import { ApplicationEntity } from 'src/modules/job-application/entities/application.entity';
 import { UsersEntity } from 'src/modules/users/entities/users.entity';
 import {
   Entity,
@@ -9,6 +10,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('job_post')
@@ -55,4 +57,7 @@ export class JobPostEntity {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date;
+
+  @OneToMany(() => ApplicationEntity, (application) => application.job)
+  applications: ApplicationEntity[];
 }

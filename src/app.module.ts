@@ -13,6 +13,9 @@ import { CompaniesModule } from './modules/companies/companies.module';
 import { RecruiterDtlEntity } from './modules/users/entities/recruiter-dtl.entity';
 import { JobPostEntity } from './modules/job-posts/entities/job.entity';
 import { JobsModule } from './modules/job-posts/job.module';
+import { ApplicationEntity } from './modules/job-application/entities/application.entity';
+import { SupabaseModule } from './modules/supabase/supabase.module';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
@@ -36,6 +39,7 @@ import { JobsModule } from './modules/job-posts/job.module';
         CompaniesEntity,
         RecruiterDtlEntity,
         JobPostEntity,
+        ApplicationEntity,
       ],
     }),
     UsersModule,
@@ -43,6 +47,8 @@ import { JobsModule } from './modules/job-posts/job.module';
     ExperiencesModule,
     CompaniesModule,
     JobsModule,
+    SupabaseModule,
+    UploadModule,
   ],
 })
 export class AppModule {}

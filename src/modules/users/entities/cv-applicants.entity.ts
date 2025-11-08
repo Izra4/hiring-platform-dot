@@ -4,10 +4,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { UsersEntity } from './users.entity';
+import { ApplicationEntity } from 'src/modules/job-application/entities/application.entity';
 
 @Entity('cv_applicants')
 export class CvApplicantsEntity {
@@ -26,4 +28,7 @@ export class CvApplicantsEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => ApplicationEntity, (application) => application.cv)
+  applications: ApplicationEntity[];
 }

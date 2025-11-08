@@ -14,6 +14,7 @@ import { CompaniesEntity } from 'src/modules/companies/entities/companies.entity
 import { UserRole } from 'src/common/enums/role.enums';
 import { RecruiterDtlEntity } from './recruiter-dtl.entity';
 import { JobPostEntity } from 'src/modules/job-posts/entities/job.entity';
+import { ApplicationEntity } from 'src/modules/job-application/entities/application.entity';
 
 @Entity('users')
 export class UsersEntity {
@@ -76,4 +77,7 @@ export class UsersEntity {
 
   @OneToMany(() => JobPostEntity, (jobPost) => jobPost.recruiter)
   jobPosts: JobPostEntity[];
+
+  @OneToMany(() => ApplicationEntity, (application) => application.user)
+  applications: ApplicationEntity[];
 }
