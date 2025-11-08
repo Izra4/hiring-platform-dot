@@ -7,7 +7,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: WinstonModule.createLogger({
       transports: [
-        // Tampilkan di console
         new winston.transports.Console({
           format: winston.format.combine(
             winston.format.colorize(),
@@ -19,7 +18,6 @@ async function bootstrap() {
             ),
           ),
         }),
-        // Simpan ke file app.log
         new winston.transports.File({
           filename: 'logs/app.log',
           format: winston.format.combine(

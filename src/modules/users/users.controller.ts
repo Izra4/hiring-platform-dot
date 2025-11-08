@@ -84,7 +84,7 @@ export class UsersController {
       message: 'User found',
       data: {
         ...response,
-        company: userData?.company_created.id,
+        company: userData?.company_created?.id ?? null,
       },
     };
   }

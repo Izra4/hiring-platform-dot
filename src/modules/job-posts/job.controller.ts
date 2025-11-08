@@ -27,12 +27,22 @@ export class JobsController {
     private readonly logger: LoggerService,
   ) {}
 
-  @UseGuards(AuthGuard)
   @Get()
   async findAll() {
     this.logger.log('Fetching all job listings', 'JobsController');
 
     const jobs = await this.jobService.findAll();
+
+    if (jobs.length <= 0) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'No jobs found',
+          data: null,
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
 
     this.logger.log(
       `Fetched ${Array.isArray(jobs) ? jobs.length : 0} job(s)`,
