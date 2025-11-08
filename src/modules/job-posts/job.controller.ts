@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Post,
@@ -18,6 +19,12 @@ import { AuthGuard } from 'src/common/guards/auth.guard';
 @Controller('jobs')
 export class JobsController {
   constructor(private readonly jobService: JobService) {}
+
+  @UseGuards(AuthGuard)
+  @Get()
+  findAll() {
+    return this.jobService.findAll();
+  }
 
   @UseGuards(AuthGuard)
   @Post()

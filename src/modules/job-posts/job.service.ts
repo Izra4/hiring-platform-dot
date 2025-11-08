@@ -40,4 +40,8 @@ export class JobService {
 
     return await this.jobRepository.save(data);
   }
+
+  async findAll(): Promise<JobPostEntity[]> {
+    return await this.jobRepository.find();
+  }
 }

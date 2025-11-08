@@ -81,13 +81,26 @@ export class UsersController {
 
   @UseGuards(AuthGuard)
   @Post('cv')
-  async uploadCv(@Req() req: Request, @Body() cv_url: string) {
+  async uploadCv(@Req() req: Request, @Body('cv_url') cv_url: string) {
     const userInfo = (req as JwtPayload).user;
     const data = await this.usersService.uploadCv(userInfo.sub, cv_url);
 
     return {
       status: HttpStatus.CREATED,
       message: 'CV uploaded',
+      data,
+    };
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('cv')
+  async getCv(@Req() req: Request) {
+    const userInfo = (req as JwtPayload).user;
+    const data = await this.usersService.getCvByUserId(userInfo.sub);
+
+    return {
+      status: HttpStatus.CREATED,
+      message: 'Data fetched',
       data,
     };
   }

@@ -128,4 +128,10 @@ export class UsersService {
     });
     return await this.cvApplicantsRepository.save(data);
   }
+
+  async getCvByUserId(userId: string): Promise<CvApplicantsEntity[]> {
+    return await this.cvApplicantsRepository.findBy({
+      user: { id: userId },
+    });
+  }
 }

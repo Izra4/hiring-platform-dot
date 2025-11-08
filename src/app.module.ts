@@ -16,6 +16,7 @@ import { JobsModule } from './modules/job-posts/job.module';
 import { ApplicationEntity } from './modules/job-application/entities/application.entity';
 import { SupabaseModule } from './modules/supabase/supabase.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { ApplicationModule } from './modules/job-application/application.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { UploadModule } from './modules/upload/upload.module';
     JobsModule,
     SupabaseModule,
     UploadModule,
+    ApplicationModule,
   ],
 })
 export class AppModule {}
