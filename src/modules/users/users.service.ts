@@ -26,7 +26,7 @@ export class UsersService {
   findbyId(id: string): Promise<UsersEntity | null> {
     return this.usersRepository.findOne({
       where: { id },
-      relations: ['usersSkills'],
+      relations: ['usersSkills', 'company_created'],
     });
   }
 

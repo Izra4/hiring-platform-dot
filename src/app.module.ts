@@ -12,6 +12,7 @@ import { ExperiencesModule } from './modules/experiences/experiences.module';
 import { CompaniesModule } from './modules/companies/companies.module';
 import { RecruiterDtlEntity } from './modules/users/entities/recruiter-dtl.entity';
 import { JobPostEntity } from './modules/job-posts/entities/job.entity';
+import { JobsModule } from './modules/job-posts/job.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { JobPostEntity } from './modules/job-posts/entities/job.entity';
     AuthModule,
     ExperiencesModule,
     CompaniesModule,
+    JobsModule,
   ],
 })
 export class AppModule {}

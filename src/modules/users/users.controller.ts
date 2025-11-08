@@ -39,13 +39,24 @@ export class UsersController {
     const userData = await this.usersService.findbyId(userInfo.sub);
     const response = userRegisterResponseSchema.parse(userData);
 
+    if (userInfo.role === 'applicant') {
+      return {
+        status: HttpStatus.OK,
+        message: 'User found',
+        data: {
+          ...response,
+          cvApplicants: userData?.cvApplicants,
+          skills: userData?.usersSkills,
+        },
+      };
+    }
+
     return {
       status: HttpStatus.OK,
       message: 'User found',
       data: {
         ...response,
-        cvApplicants: userData?.cvApplicants,
-        skills: userData?.usersSkills,
+        company: userData?.company_created.id,
       },
     };
   }
