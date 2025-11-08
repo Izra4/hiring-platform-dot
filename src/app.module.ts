@@ -19,6 +19,8 @@ import { UploadModule } from './modules/upload/upload.module';
 import { ApplicationModule } from './modules/job-application/application.module';
 import { TrxEntity } from './modules/premium_transactions/entities/trx.entity';
 import { TransactionsModule } from './modules/premium_transactions/trx.module';
+import { WinstonModule } from 'nest-winston';
+import winston from 'winston';
 
 @Module({
   imports: [
@@ -55,6 +57,20 @@ import { TransactionsModule } from './modules/premium_transactions/trx.module';
     UploadModule,
     ApplicationModule,
     TransactionsModule,
+    WinstonModule.forRoot({
+      transports: [
+        new winston.transports.Console({
+          format: winston.format.simple(),
+        }),
+        new winston.transports.File({
+          filename: 'logs/app.log',
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.json(),
+          ),
+        }),
+      ],
+    }),
   ],
 })
 export class AppModule {}
