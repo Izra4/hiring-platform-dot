@@ -14,10 +14,23 @@ import { RegisterSchema, userRegisterResponseSchema } from './dto/register.dto';
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { JwtPayload } from 'src/common/interfaces/jwt-payload.interface';
+import { AddSkillsSchema } from './dto/skills.dto';
+import type { AddSkillsDto } from './dto/skills.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Post('register')
+  @UsePipes(new ZodValidationPipe(RegisterSchema))
+  async register(@Body() request: RegisterDto) {
+    const user = await this.usersService.create(request);
+    return {
+      status: HttpStatus.CREATED,
+      message: 'User created successfully',
+      data: user,
+    };
+  }
 
   @UseGuards(AuthGuard)
   @Get('profile')
@@ -32,18 +45,26 @@ export class UsersController {
       data: {
         ...response,
         cvApplicants: userData?.cvApplicants,
+        skills: userData?.usersSkills,
       },
     };
   }
 
-  @Post('register')
-  @UsePipes(new ZodValidationPipe(RegisterSchema))
-  async register(@Body() request: RegisterDto) {
-    const user = await this.usersService.create(request);
+  @UseGuards(AuthGuard)
+  @Post('skills')
+  @UsePipes(new ZodValidationPipe(AddSkillsSchema))
+  async addSkills(@Req() req: Request, @Body() request: AddSkillsDto) {
+    const userInfo = (req as JwtPayload).user;
+    const data = await this.usersService.addSkills(
+      userInfo.sub,
+      request,
+      userInfo.role,
+    );
+
     return {
       status: HttpStatus.CREATED,
-      message: 'User created successfully',
-      data: user,
+      message: 'Skills Added',
+      data,
     };
   }
 }

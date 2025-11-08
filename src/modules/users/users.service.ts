@@ -1,15 +1,22 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersEntity } from './entities/users.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { RegisterDto, userRegisterResponseSchema } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
+import { AddSkillsDto } from './dto/skills.dto';
+import { UsersSkillsEntity } from './entities/users-skills.entity';
+import { RecruiterDtlEntity } from './entities/recruiter-dtl.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UsersEntity)
     private usersRepository: Repository<UsersEntity>,
+    @InjectRepository(UsersSkillsEntity)
+    private usersSkillsRepository: Repository<UsersSkillsEntity>,
+    @InjectRepository(RecruiterDtlEntity)
+    private recruiterDtlRepository: Repository<RecruiterDtlEntity>,
   ) {}
 
   findAll(): Promise<UsersEntity[]> {
@@ -17,7 +24,10 @@ export class UsersService {
   }
 
   findbyId(id: string): Promise<UsersEntity | null> {
-    return this.usersRepository.findOneBy({ id: id });
+    return this.usersRepository.findOne({
+      where: { id },
+      relations: ['usersSkills'],
+    });
   }
 
   findByEmail(email: string): Promise<UsersEntity | null> {
@@ -56,5 +66,57 @@ export class UsersService {
     const response = userRegisterResponseSchema.parse(savedUser);
 
     return response as UsersEntity;
+  }
+
+  async addSkills(
+    userId: string,
+    dto: AddSkillsDto,
+    role: string,
+  ): Promise<UsersSkillsEntity | HttpException> {
+    if (role != 'applicant') {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'Only Applicant',
+          data: null,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const existing = await this.usersSkillsRepository.findOne({
+      where: { user: { id: userId } },
+      relations: ['user'],
+    });
+
+    let savedSkill: UsersSkillsEntity;
+
+    if (existing) {
+      existing.skills = dto.skills;
+      savedSkill = await this.usersSkillsRepository.save(existing);
+    } else {
+      const userSkills = this.usersSkillsRepository.create({
+        user: { id: userId },
+        skills: dto.skills,
+      });
+      savedSkill = await this.usersSkillsRepository.save(userSkills);
+    }
+
+    return savedSkill;
+  }
+
+  async addRecruiterDetailTransactional(
+    manager: EntityManager,
+    userId: string,
+    companyId: string,
+  ): Promise<RecruiterDtlEntity> {
+    const repo = manager.getRepository(RecruiterDtlEntity);
+
+    const data = repo.create({
+      user: { id: userId },
+      company: { id: companyId },
+    });
+
+    return await repo.save(data);
   }
 }

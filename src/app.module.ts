@@ -8,6 +8,9 @@ import { UsersSkillsEntity } from './modules/users/entities/users-skills.entity'
 import { ExperiencesEntity } from './modules/experiences/entities/experiences.entity';
 import { CompaniesEntity } from './modules/companies/entities/companies.entity';
 import { AuthModule } from './modules/auth/auth.module';
+import { ExperiencesModule } from './modules/experiences/experiences.module';
+import { CompaniesModule } from './modules/companies/companies.module';
+import { RecruiterDtlEntity } from './modules/users/entities/recruiter-dtl.entity';
 
 @Module({
   imports: [
@@ -29,10 +32,13 @@ import { AuthModule } from './modules/auth/auth.module';
         UsersSkillsEntity,
         ExperiencesEntity,
         CompaniesEntity,
+        RecruiterDtlEntity,
       ],
     }),
     UsersModule,
     AuthModule,
+    ExperiencesModule,
+    CompaniesModule,
   ],
 })
 export class AppModule {}

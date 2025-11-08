@@ -1,3 +1,4 @@
+import { RecruiterDtlEntity } from 'src/modules/users/entities/recruiter-dtl.entity';
 import { UsersEntity } from 'src/modules/users/entities/users.entity';
 import {
   Column,
@@ -16,9 +17,6 @@ export class CompaniesEntity {
 
   @Column('varchar', { unique: true, length: 255, nullable: false })
   name: string;
-
-  @Column('varchar', { length: 255, nullable: false })
-  slug: string;
 
   @Column('text', { nullable: true })
   description: string;
@@ -51,6 +49,9 @@ export class CompaniesEntity {
   @OneToOne(() => UsersEntity, (user) => user.id)
   @JoinColumn({ name: 'updated_by' })
   updated_by: UsersEntity;
+
+  @OneToOne(() => RecruiterDtlEntity, (recruiter) => recruiter.id)
+  recruiter: RecruiterDtlEntity;
 
   @CreateDateColumn()
   createdAt: Date;

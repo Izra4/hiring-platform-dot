@@ -5,6 +5,7 @@ import { UsersEntity } from './entities/users.entity';
 import { UsersService } from './users.service';
 import { CvApplicantsEntity } from './entities/cv-applicants.entity';
 import { UsersSkillsEntity } from './entities/users-skills.entity';
+import { RecruiterDtlEntity } from './entities/recruiter-dtl.entity';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UsersSkillsEntity } from './entities/users-skills.entity';
       UsersEntity,
       CvApplicantsEntity,
       UsersSkillsEntity,
+      RecruiterDtlEntity,
     ]),
   ],
   providers: [UsersService],
